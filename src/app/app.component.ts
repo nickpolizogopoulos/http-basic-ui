@@ -1,33 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { 
+  Component, 
+  OnInit 
+} from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
-
-interface ShortButton {
-  name:string;
-  category?:string;
-}
-
-interface Product {
-  id:number;
-  title:string;
-  image:string;
-  price:number;
-  description:string;
-  category:string;
-  rating:Rating;
-}
-
-interface Rating {
-  rate:number;
-  count:number;
-}
+import { 
+  Product, 
+  ShortButton 
+} from './shared/interfaces';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
+  imports:
+  [
     RouterOutlet,
     DecimalPipe
   ],
@@ -44,11 +32,13 @@ export class AppComponent implements OnInit {
     this.fetching = true;
     this.http
       .get<Product[]>(this.products_url)
-      .subscribe({
-        next: (products:any[]) => this.products = products,
-        error: error => console.error('Error:', error),
-        complete: () => this.fetching = false
-      });
+      .subscribe(
+        {
+          next: ( products:Product[] ) => this.products = products,
+          error: error => console.error('Error:', error),
+          complete: () => this.fetching = false
+        }
+      );
   }
 
   products_url:string = 'https://fakestoreapi.com/products';
@@ -56,14 +46,20 @@ export class AppComponent implements OnInit {
   products:Product[] = [];
   selectedCategory: string = '';
  
-  shortList(category: string): Product[] {
+  shortList(category: string): Product[]
+  {
     this.selectedCategory = category;
+
     if (!category)
       return this.products;
-    return this.products.filter(product => product.category === category);
+
+    return this.products.filter(
+      product => product.category === category
+    );
   }
 
-  shortButtons:ShortButton[] = [
+  shortButtons:ShortButton[] =
+  [
     {
       name: 'Show All',
     },
