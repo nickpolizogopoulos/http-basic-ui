@@ -1,78 +1,64 @@
-img {
-    width: 130px;
-    height: auto;
-    margin-left: 30px;
+
+$btn-default: rgb(106, 106, 106);
+$btn-hover: rgb(72, 72, 72);
+
+%active-category {
+    color: $btn-hover !important;
+    border: 1px solid transparent !important;
+    box-shadow: 3px 3px 12px rgba(121, 121, 121, 0.6);
 }
 
-.card {
-    padding: 35px 25px;
-    margin: 30px;
-    width: 600px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.description {
-    &::before {
-        content: "[ ";
-    }
-    &::after {
-        content: " ]";
-    }
-}
-
-.plus-icon, .minus-icon {
-    margin-bottom: 2px;
-}
-
-.btn {
-    margin-right: 10px;
-}
-
-.category, .id {
-    color: gray;
-    font-size: 13px;
-}
-
-.id {
-    color: black;
-}
-
-.filter-buttons {
+.button-list {
+    list-style-type: none;
     display: flex;
     justify-content: center;
+    flex-direction: row;
+    margin: 20px 0;
+    width: 100%;
+    @media screen and (max-width: 769px) {
+        flex-direction: column;
+    }
     & button {
         background-color: transparent;
-        color: gray;
-        border: 1px solid gray;
+        color: $btn-default;
+        border: 1px solid $btn-default;
         padding: 4px 17px;
-        margin-right: 10px;
+        margin: 0 10px 15px 0;
         border-radius: 50px;
-        &:hover {
-            border: 1px solid transparent;
-            box-shadow: 2px 2px 10px rgba(148, 148, 148, 0.757);
-        }
     }
-}
-
-.selected-category {
-    border: 1px solid transparent;
-    box-shadow: 2px 2px 10px rgba(148, 148, 148, 0.757);
-}
-
-.add-remove {
-    padding: 3px 10px 5px 10px;
-}
-
-.filter-result {
-    background-color: transparent;
-    border: 1px solid grey;
-    padding: 5px 15px 7px 10px;
-    border-radius: 50px;
 }
 
 .bi-x {
     cursor: pointer;
-    border: 1px solid grey;
+    border: 1px solid $btn-default;
     border-radius: 50px;
-    margin-right: 5px;
+    margin: 0 9px 2px 0;
+    color: rgb(228, 79, 79);
+}
+
+.button-list button,
+.bi-x {
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        @extend %active-category;
+    }
+}
+
+.filter-result {
+    background-color: transparent;
+    margin: 0 0 0 13px;
+    &:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+        text-decoration-color: grey;
+    }
+}
+
+.active-category {
+    @extend %active-category;
+}
+
+.filter-box {
+    min-height: 30px;
 }
