@@ -1,7 +1,8 @@
 import { 
     Component,
     input,
-    Input
+    Input,
+    signal
 } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
@@ -17,54 +18,53 @@ import { type Product } from '../shared/interfaces';
     ],
     template: `
 
-
         <section class="card">
             
             <div class="mb-5">
-                <h5>{{product.title}}</h5>
+                <h5>{{product().title}}</h5>
                 <hr>
-                @if (!isExpanded) {
-                    <small>{{ product.description | shorten: descriptionLength }}
+                @if (!isExpanded()) {
+                    <small>{{ product().description | shorten: descriptionLength() }}
 
                         <!-- Some descriptions are smaller than the desctiptionLength.
                              In this case a "read more" button will be useless 
                              since there's no more text that has to get expanded -->
-                        @if (product.description.length > descriptionLength) { 
-                            <button (click)="onExpand()" [class.bg-grey]="isExpanded" class="btn-expand">read more</button>
+                        @if (product().description.length > descriptionLength()) { 
+                            <button (click)="onExpand()" [class.bg-grey]="isExpanded()" class="btn-expand">read more</button>
                         }
 
                     </small>
                 }
                 @else {
-                    <small>{{ product.description }}
-                        <button (click)="onExpand()" [class.bg-grey]="isExpanded" class="btn-expand">read less</button>
+                    <small>{{ product().description }}
+                        <button (click)="onExpand()" [class.bg-grey]="isExpanded()" class="btn-expand">read less</button>
                     </small>
                 }
             </div>
 
             <div class="row">
                 <div class="col">
-                    <img src="{{product.image}}">
+                    <img src="{{product().image}}">
                 </div>
                 <div class="col">
                     <div class="mb-4">
-                        <span class="category">Category: {{product.category}}</span>
-                        <p class="id">Product code: {{product.id}}</p>
+                        <span class="category">Category: {{product().category}}</span>
+                        <p class="id">Product code: {{product().id}}</p>
                     </div>
-                    @if (product.category === menClothing || product.category ===  womenClothing) {
+                    @if (product().category === menClothing() || product().category ===  womenClothing()) {
                         <h4>-50% discount!</h4>
                     }
                     <p>
-                        @if (product.category === menClothing || product.category ===  womenClothing) {
+                        @if (product().category === menClothing() || product().category ===  womenClothing()) {
                             <span class="text-success">Only: </span>
                         }
                         <span 
-                            [class.green-underline]="product.category === menClothing || product.category ===  womenClothing"
+                            [class.green-underline]="product().category === menClothing() || product().category ===  womenClothing()"
                         >
-                            {{ product.price / 2 | number:'1.2-2' }}</span> €
+                            {{ product().price / 2 | number:'1.2-2' }}</span> €
 
-                        @if (product.category === menClothing || product.category ===  womenClothing) {
-                            from <span class="text-danger" style="text-decoration: line-through;">{{ product.price }} €</span>
+                        @if (product().category === menClothing() || product().category ===  womenClothing()) {
+                            from <span class="text-danger" style="text-decoration: line-through;">{{ product().price }} €</span>
                         }
                     </p>
                     <div class="mt-3">
@@ -90,16 +90,14 @@ import { type Product } from '../shared/interfaces';
 })
 export class ProductComponent {
 
-    @Input({required: true}) product!: Product;
-
-    menClothing: string = `men's clothing`;
-    womenClothing: string = `women's clothing`;
-
-    descriptionLength: number = 170;
-    isExpanded: boolean = false;
+    product = input.required<Product>();
+    menClothing = signal<string>(`men's clothing`);
+    womenClothing = signal<string>(`women's clothing`);
+    descriptionLength = signal<number>(170);
+    isExpanded = signal<boolean>(false);
 
     onExpand(): void {
-        this.isExpanded = !this.isExpanded;
+        this.isExpanded.set(!this.isExpanded())
     }
 
 }

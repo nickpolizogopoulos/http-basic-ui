@@ -1,7 +1,7 @@
 import { 
   Component, 
   inject, 
-  OnInit 
+  OnInit
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
@@ -49,8 +49,7 @@ export class AppComponent implements OnInit {
   products: Product[] = [];
   selectedCategory: string = '';
  
-  shortList( category: string ): Product[]
-  {
+  shortList( category: string ): Product[] {
 
     this.selectedCategory = category;
 
@@ -62,26 +61,27 @@ export class AppComponent implements OnInit {
     );
   }
 
-  shortButtons: ShortButton[] = [
+  shortButtons: ShortButton[] = 
+  [
     {
       name: 'Show All',
-      category: ''
+      filter: ''
     },
     {
       name: 'Men Clothing',
-      category: `men's clothing`
+      filter: `men's clothing`
     },
     {
       name: 'Jewelery',
-      category: 'jewelery'
+      filter: 'jewelery'
     },
     {
       name: 'Electronics',
-      category: 'electronics'
+      filter: 'electronics'
     },
     {
       name: 'Women Clothing',
-      category: `women's clothing`
+      filter: `women's clothing`
     }
   ];
 

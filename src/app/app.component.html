@@ -1,12 +1,10 @@
 <section class="container">
-
     <app-header />
-    
     <section>
         <ul class="button-list">
             @for (button of shortButtons; track $index) {
                 <li>
-                    <button [class.active-category]="button.category === selectedCategory" (click)="shortList(button.category!)">{{ button.name }}</button>
+                    <button [class.active-category]="button.filter === selectedCategory" (click)="shortList(button.filter!)">{{ button.name }}</button>
                 </li>
             }
         </ul>

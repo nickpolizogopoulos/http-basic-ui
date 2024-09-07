@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
           Get -50% to all clothing with our promo code [DISC001]!
         </em>
       </h3>
-      <small>Mini Angular Http project using the <a href="https://fakestoreapi.com/" target="_blank">Fake Store</a> products API.</small>
+      <small>Mini Angular Http project using the <a href="https://fakestoreapi.com/products" target="_blank">Fake Store products</a> API.</small>
     </header>
   
   `,
